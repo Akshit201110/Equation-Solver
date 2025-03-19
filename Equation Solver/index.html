@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Equation Solver</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Font CDNs -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,500&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style>
+        .pushable {
+          position: relative;
+          border: none;
+          background: transparent;
+          padding: 0;
+          cursor: pointer;
+          outline-offset: 4px;
+          transition: filter 250ms;
+        }
+        .shadow {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border-radius: 12px;
+          background: hsl(0deg 0% 0% / 0.25);
+          will-change: transform;
+          transform: translateY(2px);
+          transition:
+            transform
+            600ms
+            cubic-bezier(.3, .7, .4, 1);
+        }
+        .edge {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border-radius: 12px;
+          background: linear-gradient(
+            to left,
+            hsl(340deg 100% 16%) 0%,
+            hsl(340deg 100% 32%) 8%,
+            hsl(340deg 100% 32%) 92%,
+            hsl(340deg 100% 16%) 100%
+          );
+        }
+        .front {
+          display: block;
+          position: relative;
+          padding: 12px 42px;
+          border-radius: 12px;
+          font-size: 1.25rem;
+          /* font-size: 3.5vh; */
+          color: white;
+          background: hsl(345deg 100% 47%);
+          will-change: transform;
+          transform: translateY(-4px);
+          transition:
+            transform
+            600ms
+            cubic-bezier(.3, .7, .4, 1);
+        }
+        .pushable:hover {
+          filter: brightness(110%);
+        }
+        .pushable:hover .front {
+          transform: translateY(-6px);
+          transition:
+            transform
+            250ms
+            cubic-bezier(.3, .7, .4, 1.5);
+        }
+        .pushable:active .front {
+          transform: translateY(-2px);
+          transition: transform 34ms;
+        }
+        .pushable:hover .shadow {
+          transform: translateY(4px);
+          transition:
+            transform
+            250ms
+            cubic-bezier(.3, .7, .4, 1.5);
+        }
+        .pushable:active .shadow {
+          transform: translateY(1px);
+          transition: transform 34ms;
+        }
+        .pushable:focus:not(:focus-visible) {
+          outline: none;
+        }
+    </style>
+  </head>
+  <body style="background-image: radial-gradient(#feada6 , #f5efef);">
+      
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <div class="very_main_container1" id="very_main_container1" style="width: 100%; height: 100%;">
+        <center>
+            
+            <div style="width: 75%;">
+
+                <div><h1 style="font-family: 'Playfair Display', serif; background: linear-gradient(to top, #999999, #000000);
+                    -webkit-text-fill-color: transparent;
+                    -webkit-background-clip: text;
+                    font-size: 10vw;
+                    height: 15vw;
+                    margin: 0px;">Equation Solver</h1></div>
+                <div style="/*padding-top: 50px;*/">
+                    <input type="text" class="form-control" name="enter_eq1" id="enter_eq1" aria-describedby="helpId" placeholder="Enter Equation">
+                </div>
+                <div class="px-4 container" style="padding-top: 30px;">
+                    <div class="row gx-5" style="width: 118%; margin-left: -9%;">
+                        <div class="col-lg" style="margin-top: 20px;">
+                            <button onclick="only_answer1(document.getElementById('enter_eq1').value)" class="pushable" style="width: 100%;">
+                                <span class="shadow"></span>
+                                <span class="edge"></span>
+                                <span class="front">
+                                  Answer Only
+                                </span>
+                              </button>
+                        </div>
+
+                        <!-- <div class="col-lg" style="margin-top: 20px;">
+                            <button onclick="fully_solved1()" class="pushable" style="width: 100%;">
+                              <span class="shadow"></span>
+                              <span class="edge"></span>
+                              <span class="front">
+                                Fully Solved
+                              </span>
+                            </button>
+                        </div> -->
+                    </div>
+                </div>
+                <div>
+                  <div id="answer1" class="answer1">
+
+                  </div>
+                </div>
+
+            </div>
+        </center>
+    </div>
+
+
+    <script>
+
+
+      function only_answer1(equation) {
+        // // console.log("Hello1");
+        var eq1 = document.getElementById("enter_eq1").value;
+        var eq2 = eq1.split("=")[0];
+        // var eq3 = eq1.split("=")[1];
+        // var eq4 = "";
+        var va1 = "";
+        // var help1 = "";
+        for (let i = 0; i < eq2.length; i++) {
+          if (eq2[i].match(/[a-zA-Z]/g)) {
+            // console.log(eq2[i]);
+            va1 = eq2[i];
+          }          
+        }
+
+        // for (let i = 0; i < eq2.length; i++) {
+        //   if(/\d/.test(eq2[i])){
+        //     if (i==0) {
+        //       eq2 = eq2.split("");
+        //       eq2.splice(i,0,"+")
+        //       eq2 = eq2.join("");
+        //     } else {
+        //       if (/[0-9]/.test(eq2[i-1]) || eq2[i-1].match(/[a-zA-Z]/g) || eq2[i-1] == "+" || eq2[i-1] == "-") {
+        //       } else{
+        //         eq2 = eq2.split("");
+        //         eq2.splice(i,0,"+")
+        //         eq2 = eq2.join("");
+        //       }
+        //     }
+        //   }          
+        // }
+
+        // eq4 = eq2.split("-");
+        // for (let i = 0; i < eq4.length; i++) {
+        //   if (eq4[i].includes(va1)) {
+
+        //   } else {
+        //     eq3 += "+";
+        //     help1 = eq4[i].length;
+        //     for (let j = 0; j < help1; j++) {
+        //       if (/\d/.test(eq4[i][j])) {
+        //         eq3 += eq4[i][j];
+        //         eq4[i] = eq4[i].split("");
+        //         eq4[i][j] = "";
+        //         eq4[i] = eq4[i].join("");
+        //         console.log(eq4);
+        //         console.log(eq3);
+        //         help1 = eq4[i].length;
+        //         j--;
+        //       } else {
+        //         break;  
+        //       }
+        //     }
+        //   }          
+        // }
+        // eq2 = "";
+        // for (let i = 0; i < eq4.length; i++) {
+        //   eq2+= eq4[i];
+        // }
+        // console.log(eq2);
+        // eq3 = eval(eq3);
+
+        // eq4 = eq2.split("+");
+        // for (let i = 0; i < eq4.length; i++) {
+        //   if (eq4[i].includes(va1)) {
+
+        //   } else {
+        //      eq3 += "-";
+        //      help1 = eq4[i].length;
+        //     for (let j = 0; j < help1; j++) {
+        //       if (/\d/.test(eq4[i][j])) {
+        //         eq3 += eq4[i][j];
+        //         eq4[i] = eq4[i].split("");
+        //         eq4[i][j] = "";
+        //         eq4[i] = eq4[i].join("");
+        //         console.log(eq4);
+        //         console.log(eq3);
+        //         help1 = eq4[i].length;
+        //         j--;
+        //       } else {
+        //         break;  
+        //       }
+        //     }
+        //   }          
+        // }
+        // eq2 = "";
+        // for (let i = 0; i < eq4.length; i++) {
+        //   eq2+= eq4[i];
+        // }
+        // console.log(eq2);
+        // eq3 = eval(eq3);
+
+        // eq4 = eq2.split("*");
+        // for (let i = 0; i < eq4.length; i++) {
+        //   if (eq4[i].includes(va1)) {
+
+        //   } else {
+        //     eq3 += "/";
+        //     help1 = eq4[i].length;
+        //     for (let j = 0; j < help1; j++) {
+        //       if (/\d/.test(eq4[i][j])) {
+        //         eq3 += eq4[i][j];
+        //         eq4[i] = eq4[i].split("");
+        //         eq4[i][j] = "";
+        //         eq4[i] = eq4[i].join("");
+        //         console.log(eq4);
+        //         console.log(eq3);
+        //         help1 = eq4[i].length;
+        //         j--;
+        //       } else {
+        //         break;  
+        //       }
+        //     }
+        //   }          
+        // }
+        // eq2 = "";
+        // for (let i = 0; i < eq4.length; i++) {
+        //   eq2+= eq4[i];
+        // }
+        // console.log(eq2);
+        // eq3 = eval(eq3);
+
+        // eq4 = eq2.split("/");
+        // for (let i = 0; i < eq4.length; i++) {
+        //   if (eq4[i].includes(va1)) {
+
+        //   } else {
+        //     eq3 += "*";
+        //     help1 = eq4[i].length;
+        //     for (let j = 0; j < help1; j++) {
+        //       if (/\d/.test(eq4[i][j])) {
+        //         eq3 += eq4[i][j];
+        //         eq4[i] = eq4[i].split("");
+        //         eq4[i][j] = "";
+        //         eq4[i] = eq4[i].join("");
+        //         console.log(eq4);
+        //         console.log(eq3);
+        //         help1 = eq4[i].length;
+        //         j--;
+        //       } else {
+        //         break;  
+        //       }
+        //     }
+        //   }          
+        // }
+        // eq2 = "";
+        // for (let i = 0; i < eq4.length; i++) {
+        //   eq2+= eq4[i];
+        // }
+        // console.log(eq2);
+        // eq3 = eval(eq3);
+
+
+        // document.getElementById("answer1").innerHTML = "";
+        // document.getElementById("answer1").innerHTML = "<h2>Answer is : "+eval(eq3)+"</h2>";
+
+        
+        let n = equation.length, sign = 1, coeff = 0;
+        let total = 0, i = 0;
+    
+        // Traverse the equation
+        for (let j = 0; j < n; j++) {
+            if (equation[j] == '+' || equation[j] == '-') {
+                if (j > i)
+                    total += sign * parseInt(equation.substr(i, j - i));
+                i = j;
+            }
+    
+            // For cases such as: x, -x, +x
+            else if (equation[j] == 'x') {
+                if ((i == j) || equation[j - 1] == '+')
+                    coeff += sign;
+                else if (equation[j - 1] == '-')
+                    coeff -= sign;
+                else
+                    coeff += sign * parseInt(equation.substr(i, j - i));
+                i = j + 1;
+            }
+    
+            // Flip sign once '=' is seen
+            else if (equation[j] == '=') {
+                if (j > i)
+                    total += sign * parseInt(equation.substr(i, j - i));
+                sign = -1;
+                i = j + 1;
+            }
+        }
+    
+        // There may be a number left in the end
+        if (i < n)
+            total += sign * parseInt(equation.substr(i));
+    
+        // For infinite solutions
+        if (coeff == 0 && total == 0)
+            return "Infinite solutions";
+    
+        // For no solution
+        if (coeff == 0 && total)
+            return "No solution";
+    
+        // x = total sum / coeff of x
+        // '-' sign indicates moving
+        // numeric value to right hand side
+        let ans = -Math.floor(total / coeff);
+        // return "x=" + ans.toString();
+        
+        document.getElementById("answer1").innerHTML = "";
+        document.getElementById("answer1").innerHTML = "<h2>"+va1 +"="+ans.toString()+"</h2>";
+
+
+      }
+
+      function fully_solved1() {
+        // console.log("Hello2");
+      }
+    </script>
+  </body>
+</html>
+
